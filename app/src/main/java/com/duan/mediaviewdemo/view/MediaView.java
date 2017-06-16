@@ -255,7 +255,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     protected abstract void drawInside(Canvas canvas);
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected final void onDraw(Canvas canvas) {
 
         canvas.drawARGB(0, 0, 0, 0);
 

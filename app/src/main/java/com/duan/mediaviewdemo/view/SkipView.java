@@ -105,12 +105,12 @@ public class SkipView extends MediaView {
         innerLineRadius = array.getDimensionPixelSize(R.styleable.SkipView_innerLineRadius, 0);
         distance = array.getDimensionPixelSize(R.styleable.SkipView_distance, 0);
         triangleColor = array.getColor(R.styleable.SkipView_triangleColor, defaultColor);
-        innerLineWidth = array.getDimensionPixelSize(R.styleable.SkipView_innerLineWidth, 2);
         triangleHollow = array.getBoolean(R.styleable.SkipView_triangleHollow, false);
         triangleStroke = array.getDimensionPixelSize(R.styleable.SkipView_triangleStroke, 2);
 
-        //如果在 xml 中不指定值或指定负数将在 onLayout 方法中重新计算
-        innerLineHeight = array.getDimensionPixelSize(R.styleable.SkipView_innerLineHeight, 0);
+        innerLineWidth = array.getDimensionPixelSize(R.styleable.SkipView_innerLineWidth, 2);
+        innerLineHeight = array.getDimensionPixelSize(R.styleable.SkipView_innerLineHeight, radius * 2 / 3);
+
         triangleHeight = array.getDimensionPixelSize(R.styleable.SkipView_triangleHeight, 0);
         triangleWidth = array.getDimensionPixelSize(R.styleable.SkipView_triangleWidth, 0);
 
@@ -122,13 +122,13 @@ public class SkipView extends MediaView {
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (innerLineHeight <= 0) {
-            //竖线高度为半径的 1/3
-            innerLineHeight = radius * 2 / 3;
+        if (innerLineHeight <= 0 || innerLineWidth <= 0) {
+            innerLineHeight = 0;
+            innerLineWidth = 0;
         }
 
         if (triangleHeight <= 0)
-            triangleHeight = innerLineHeight;
+            triangleHeight = radius * 2 / 3;
 
         if (triangleWidth <= 0) {
             //将三角形绘制成等边三角形
@@ -206,6 +206,10 @@ public class SkipView extends MediaView {
      * 绘制单竖线
      */
     protected void drawLine(Canvas canvas) {
+
+        if (innerLineHeight <= 0 || innerLineWidth <= 0)
+            return;
+
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(triangleColor);
 

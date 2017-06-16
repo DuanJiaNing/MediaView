@@ -54,16 +54,20 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
-            app:distance="-5dp"
-            app:innerLineHeight="30dp"
-            app:innerLineRadius="5dp"
-            app:innerLineWidth="7dp"
 
-            app:shadowRadius="10dp"
+            app:innerLineHeight="30dp"
+            app:innerLineWidth="6dp"
+
+            app:innerLineRadius="8dp"
+
+            app:distance="-8dp"
+            app:triangleHeight="40dp"
 
             app:strokeWidth="0dp"
             app:triangleColor="#2ca4a4"
-            app:triangleRadius="8dp" />
+            app:triangleRadius="8dp"
+
+            />
 
         <com.duan.mediaviewdemo.view.SkipView
             android:layout_width="0dp"
