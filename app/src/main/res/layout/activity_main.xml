@@ -251,6 +251,8 @@
 
             app:shadowRadius="20dp"
 
+            android:paddingTop="20dp"
+            android:paddingLeft="10dp"
             android:id="@+id/sk_01"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
@@ -293,12 +295,14 @@
             app:radius="20dp"
             app:checked="false"
 
-            android:padding="20dp"
+
+            android:paddingRight="20dp"
+
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
             android:layout_alignParentTop="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="100dp"
+            android:layout_height="200dp" />
 
 
     </RelativeLayout>

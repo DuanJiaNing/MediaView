@@ -10,6 +10,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Build;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -93,11 +94,15 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     }
 
     @Override
+    @CallSuper
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        centerX = getWidth() / 2;
-        centerY = getHeight() / 2;
+//        centerX = getWidth() / 2;
+//        centerY = getHeight() / 2;
+
+        centerX = getPaddingLeft() + (getWidth() - getPaddingLeft() - getPaddingRight()) / 2;
+        centerY = getPaddingTop() + (getHeight() - getPaddingTop() - getPaddingBottom()) / 2;
 
     }
 
