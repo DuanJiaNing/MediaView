@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:orientation="vertical"
+    tools:context="com.duan.mediaviewdemo.MainActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="默认状态" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+
+        <com.duan.mediaviewdemo.view.PlayView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="定制 【上一曲】 【下一曲】" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:divider="?android:dividerHorizontal"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:id="@+id/sv_01"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            app:distance="-5dp"
+            app:innerLineHeight="30dp"
+            app:innerLineRadius="5dp"
+            app:innerLineWidth="7dp"
+
+            app:shadowRadius="10dp"
+
+            app:strokeWidth="0dp"
+            app:triangleColor="#2ca4a4"
+            app:triangleRadius="8dp" />
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:rotation="180"
+
+
+            app:innerLineHeight="30dp"
+            app:innerLineWidth="8dp"
+            app:strokeWidth="0dp" />
+
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+
+            app:innerLineHeight="20dp"
+
+            app:strokeColor="@color/colorAccent"
+            app:strokeWidth="3dp"
+            app:triangleColor="@color/colorPrimary" />
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            app:distance="3dp"
+            app:innerLineWidth="3dp"
+            app:strokeWidth="-1dp"
+            app:triangleHeight="30dp"
+            app:triangleHollow="true"
+
+            app:triangleRadius="5dp"
+            app:triangleStroke="5dp"
+            app:triangleWidth="35dp" />
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:rotation="180"
+
+            app:distance="3dp"
+            app:triangleHeight="35dp"
+            app:triangleHollow="true" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="定制 【播放】 【暂停】" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+        android:divider="?android:dividerHorizontal"
+        android:orientation="horizontal"
+        android:showDividers="middle">
+
+        <com.duan.mediaviewdemo.view.PlayView
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:rotation="180"
+
+            app:shadowRadius="13sp"
+
+            app:checked="true"
+            app:pauseLineColor="@color/colorPrimaryDark"
+            app:pauseLineDistance="15dp"
+            app:pauseLineHeight="60dp"
+
+            app:pauseLineWidth="10dp"
+
+            app:strokeWidth="-110dp"
+            app:triangleColor="@color/colorPrimary"
+            app:triangleHeight="60dp"
+            app:triangleStroke="10dp" />
+
+        <com.duan.mediaviewdemo.view.PlayView
+            android:id="@+id/v_01"
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:rotation="180"
+            app:pauseLineColor="@color/colorPrimaryDark"
+            app:pauseLineDistance="15dp"
+
+            app:pauseLineHeight="40dp"
+            app:pauseLineHollow="true"
+            app:pauseLineRadius="5dp"
+            app:pauseLineStroke="5dp"
+            app:pauseLineWidth="10dp"
+            app:shadowRadius="5dp"
+            app:strokeWidth="-110dp"
+
+            app:triangleColor="@color/colorPrimary"
+
+            app:triangleHeight="40dp"
+            app:triangleHollow="true"
+            app:triangleRadius="7dp"
+            app:triangleStroke="6dp" />
+
+        <com.duan.mediaviewdemo.view.PlayView
+            android:layout_width="0dp"
+            android:id="@+id/pv_01"
+
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+
+            android:rotation="180"
+            app:pauseLineHeight="35dp"
+            app:pauseLineWidth="10dp"
+            app:shadowRadius="6dp"
+
+            app:strokeColor="#36bf5d"
+            app:triangleColor="#36bf5d"
+
+            app:strokeWidth="3dp"
+            app:triangleHeight="35dp"
+
+            app:triangleHollow="true"
+            app:triangleRadius="5dp"
+            app:triangleStroke="7dp" />
+
+        <com.duan.mediaviewdemo.view.PlayView
+            android:layout_width="0dp"
+
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+
+            android:rotation="180"
+            app:checked="true"
+            app:pauseLineDistance="8dp"
+            app:pauseLineHeight="35dp"
+
+            app:pauseLineHollow="true"
+
+            app:pauseLineRadius="0dp"
+            app:pauseLineWidth="10dp"
+            app:strokeColor="#e4188f"
+            app:triangleColor="#e4188f"
+            app:strokeWidth="3dp"
+            app:triangleHeight="35dp"
+
+
+            app:triangleHollow="true"
+            app:triangleRadius="5dp"
+            app:triangleStroke="7dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="不同的【shadowRadius】值对布局高宽的影响，不合理赋值示例 " />
+
+    <RelativeLayout
+        android:background="#ece8e8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5">
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:background="#1c211e"
+
+            app:strokeColor="#ffeeaa"
+            app:triangleColor="#b9ffcd35"
+            app:radius="30dp"
+            app:strokeWidth="1dp"
+            app:triangleHeight="40dp"
+
+            app:innerLineWidth="0dp"
+
+            app:shadowRadius="20dp"
+
+            android:id="@+id/sk_01"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <com.duan.mediaviewdemo.view.SkipView
+            android:background="#3e3e3e"
+
+            app:shadowRadius="15dp"
+            app:radius="30dp"
+            app:strokeColor="@color/colorAccent"
+            app:triangleColor="#b9ffffff"
+            app:strokeWidth="3dp"
+
+            app:triangleWidth="4484dp"
+            app:triangleHeight="8880dp"
+
+            app:innerLineHeight="8880dp"
+            app:innerLineWidth="1280dp"
+
+            android:layout_marginRight="20dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/sk_01"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.duan.mediaviewdemo.view.PlayView
+
+            android:background="#9e9e9e"
+
+            app:pauseLineColor="@android:color/white"
+            app:triangleColor="@android:color/white"
+            app:strokeColor="@android:color/white"
+
+            app:pauseLineHeight="60dp"
+
+            app:triangleWidth="50dp"
+            app:triangleHeight="70dp"
+            app:radius="20dp"
+            app:checked="false"
+
+            android:padding="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentTop="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
