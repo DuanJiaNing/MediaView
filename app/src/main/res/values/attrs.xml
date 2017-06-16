@@ -16,6 +16,7 @@
         <attr name="strokeWidth" />
     </declare-styleable>
 
+
     <!-- 内三角的颜色-->
     <attr name="triangleColor" format="color" />
     <!-- 内部竖线的宽度-->
@@ -48,6 +49,7 @@
         <attr name="triangleStroke" />
         <attr name="triangleWidth" />
     </declare-styleable>
+
 
     <!--暂停时两条竖线的间距-->
     <attr name="pauseLineDistance" format="dimension" />
