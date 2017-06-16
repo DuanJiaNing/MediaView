@@ -22,7 +22,7 @@
 > |-- android.view.View<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;|-- abstract MediaView<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- SkipView&nbsp;&nbsp;上一曲(下一曲)按钮<br>
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- PlayView&nbsp;&nbsp;播放按钮<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- PlayView&nbsp;&nbsp;播放按钮<br>
 ##### 3.1 构成元素
 
 xml 中提供的可定制属性如下：
