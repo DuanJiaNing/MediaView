@@ -70,7 +70,7 @@ xml 中提供的可定制属性如下：
 - pauseLineHollow 是否空心
 - pauseLineStroke 空心状态下指定竖线描边宽度
 
-![](https://raw.githubusercontent.com/DuanJiaNing/MediaView/master/anyic.jpg)
+![](https://raw.githubusercontent.com/DuanJiaNing/MediaView/master/anyic1.jpg)
 
 ##### 3.2 java 类表示
 控件由三个 java 类表示，三个类的定义如下：
