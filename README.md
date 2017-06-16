@@ -18,11 +18,11 @@
 </table>
 
 #### 三.介绍
-> 控件具有如下继承结构
-> -- android.view.View
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- abstract MediaView
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- SkipView    上一曲(下一曲)按钮
-> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- PlayView     播放按钮
+> 控件具有如下继承结构<br>
+> |-- android.view.View<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;|-- abstract MediaView<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- SkipView&nbsp;&nbsp;上一曲(下一曲)按钮<br>
+> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|-- PlayView&nbsp;&nbsp;播放按钮<br>
 ##### 3.1 构成元素
 
 xml 中提供的可定制属性如下：
@@ -31,18 +31,22 @@ xml 中提供的可定制属性如下：
 - shadowRadius 阴影半径
 
 （1） 外圆圈
+
 - strokeWidth 描边宽度
 - strokeColor 描边颜色
 
 
 （2） 上一曲(下一曲)按钮：
+
 - distance 单竖线和三角形顶点距离
 
 1 单竖线：
+
 - innerLineWidth(Height) 宽度，高度：任一者赋值为 0 时不进行绘制。
 - innerLineRadius 圆角大小
 
 2 等腰三角形：
+
 - triangleWidth 三角形顶角到底边的距离
 - triangleHeight 底边高度
 - triangleColor 填充颜色
@@ -51,11 +55,13 @@ xml 中提供的可定制属性如下：
 - triangleStroke 空心时的描边宽度
 
 （3） 播放，暂停按钮
+
 - checked 是否播放，true 为正在播放（此时处于可暂停状态）
 
 1 播放状态：
 播放状态下直接绘制继承自 SkipView 的等腰三角形
 2 暂停状态：此时两条竖线的属性时完全一致的
+
 - pauseLineDistance 双竖线间距
 - pauseLineWidth 竖线宽度
 - pauseLineHeight 竖线高度
@@ -68,6 +74,7 @@ xml 中提供的可定制属性如下：
 
 ##### 3.2 java 类表示
 控件由三个 java 类表示，三个类的定义如下：
+
 - `abstract class MediaView extends View`：
 该类定义了控件的基本结构：圆圈构成的固定的最外部，由子类负责绘制的内部。
 绘制规则：先绘制外部，再绘制内部
@@ -80,13 +87,16 @@ xml 中提供的可定制属性如下：
 - 该类继承自 SkipView ，完成在播放，暂停两种状态下控件的绘制，覆写 onTouchEvent 方法以实现 checked 属性变化监听，同时覆写了 SkipView 的 drawLine 方法，以绘制可播放状态下的双竖线。
 
 #### 四.适用场景：
+
 音乐，视频等媒体文件的播放控制。
+
 #### 五.如何使用
 ##### 5.1 复制源文件
+
 使用 【上一曲(下一曲)】和【播放，暂停】控件需复制 MediaView.java ， SkipView.java ， PlayView.java 和 attrs.xml 文件到你的项目中。
 
-如果你只需要 【上一曲(下一曲)】对应的控件：
-1 复制 MediaView.java 和 SkipView.java 到你的项目中
+如果你只需要 【上一曲(下一曲)】对应的控件：<br>
+1 复制 MediaView.java 和 SkipView.java 到你的项目中<br>
 2 将 attrs 文件中的 ` <declare-styleable name="MediaView">....</declare-styleable>`及其对应的 attr 属性定义，` <declare-styleable name="SkipView">....</declare-styleable>`及其对应的 attr 属性定义 复制到你项目中的 values 文件夹下的资源文件中。
 
 ##### 5.2 使用示例
