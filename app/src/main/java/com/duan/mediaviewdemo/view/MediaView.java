@@ -13,10 +13,13 @@ import android.os.Build;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.duan.mediaviewdemo.R;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by DuanJiaNing on 2017/6/14.
@@ -155,8 +158,6 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
                 //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
                 super.onTouchEvent(event);
                 return true;
-            case MotionEvent.ACTION_MOVE:
-                break;
             case MotionEvent.ACTION_UP:
                 startReleaseAnim();
                 //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
@@ -287,6 +288,8 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     }
 
     public void setShadowRadius(int shadowRadius) {
+        if (shadowRadius <= 1)
+            shadowRadius = 1;
         this.shadowRadius = shadowRadius;
         updateAnim();
     }

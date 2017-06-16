@@ -18,7 +18,7 @@ import com.duan.mediaviewdemo.R;
  * <p>
  * 控件由如下几部分组成：
  * 1 继承自 MediaView 的圆圈部分
- * 2 内部的当竖线
+ * 2 内部的单竖线
  * 3 内部的等腰三角形
  * <p>
  * tip: 在 xml 中使用 rotation 属性可实现控件旋转：
