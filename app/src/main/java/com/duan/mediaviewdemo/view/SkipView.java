@@ -214,7 +214,7 @@ public class SkipView extends MediaView {
         paint.setColor(triangleColor);
 
         //绘制竖线
-        //参考三角形的位置绘制
+        //参考三角形的 顶点 绘制
         float left = coordinate[0][0] - distance - innerLineWidth;
         float top = coordinate[0][1] - innerLineHeight / 2;
         float right = left + innerLineWidth;

@@ -13,13 +13,10 @@ import android.os.Build;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import com.duan.mediaviewdemo.R;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by DuanJiaNing on 2017/6/14.
