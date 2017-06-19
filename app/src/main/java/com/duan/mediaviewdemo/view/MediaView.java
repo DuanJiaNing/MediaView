@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.duan.mediaviewdemo.R;
 
+
 /**
  * Created by DuanJiaNing on 2017/6/14.
  * 媒体控件抽象基类
@@ -34,6 +35,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
 
     //阴影半径
     protected int shadowRadius;
+    protected int tempShadowRadius = 1;
 
     //圆圈颜色
     protected int strokeColor;
@@ -218,7 +220,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
-        shadowRadius = value;
+        tempShadowRadius = value;
         invalidate();
     }
 
@@ -262,16 +264,8 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
 
         canvas.drawARGB(0, 0, 0, 0);
 
-        int sd;
-        if (isCreate) {
-            //第一次绘制时使阴影为0
-            //之后重绘时由动画控制阴影的大小
-            sd = 1;
-            isCreate = false;
-        } else sd = shadowRadius;
-
         //只绘制外阴影和图形内容本身，不绘制内阴影
-        paint.setMaskFilter(new BlurMaskFilter(sd, BlurMaskFilter.Blur.SOLID));
+        paint.setMaskFilter(new BlurMaskFilter(tempShadowRadius, BlurMaskFilter.Blur.SOLID));
 
         drawOuter(canvas);
 
