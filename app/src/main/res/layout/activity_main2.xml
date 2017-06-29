@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:layout_weight="0.3"
 
-
         />
 
     <com.duan.mediaviewdemo.view.PlayView
