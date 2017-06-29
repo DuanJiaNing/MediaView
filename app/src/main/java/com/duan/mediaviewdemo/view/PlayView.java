@@ -74,7 +74,7 @@ public class PlayView extends SkipView implements Checkable {
 
         pauseLineDistance = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineDistance, 0);
         pauseLineWidth = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineWidth, 0);
-        pauseLineHeight = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineHeight, 0);
+        pauseLineHeight = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineHeight, 951228);
         pauseLineRadius = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineRadius, triangleRadius);
         pauseLineColor = array.getColor(R.styleable.PlayView_pauseLineColor, strokeColor);
         pauseLineHollow = array.getBoolean(R.styleable.PlayView_pauseLineHollow, false);
@@ -88,19 +88,32 @@ public class PlayView extends SkipView implements Checkable {
 
         array.recycle();
 
+//
+//        if (pauseLineHeight <= 0)
+//            pauseLineHeight = radius * 3 / 4;
+//
+//        if (pauseLineWidth <= 0)
+//            pauseLineWidth = radius / 10;
+//
+//        if (pauseLineDistance <= 0)
+//            pauseLineDistance = radius * 2 / 5;
+
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+
         if (pauseLineHeight <= 0)
             pauseLineHeight = radius * 3 / 4;
+        else if (pauseLineHeight == 951228)
+            pauseLineHeight = triangleHeight;
 
         if (pauseLineWidth <= 0)
             pauseLineWidth = radius / 10;
 
         if (pauseLineDistance <= 0)
             pauseLineDistance = radius * 2 / 5;
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
 
         //赋值不合理，进行重置（这不是此控件预期的展现形式，应根据整体比例合理赋值）
         //只对上限进行处理
