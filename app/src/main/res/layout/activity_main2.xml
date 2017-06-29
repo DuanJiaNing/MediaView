@@ -13,7 +13,12 @@
         android:layout_height="match_parent"
         android:layout_weight="0.3"
 
-        />
+        app:triangleStroke="5dp"
+        app:triangleRadius="8dp"
+        app:triangleHollow="true"
+        app:hollow="false"
+        app:solidColor="#faa"
+        app:triangleColor="#ff0000" />
 
     <com.duan.mediaviewdemo.view.PlayView
         android:id="@+id/play_song"
@@ -22,12 +27,15 @@
         android:layout_weight="0.4"
         android:rotation="180"
 
-        app:checked="true"
+        app:hollow="false"
+        app:pauseLineColor="#fff"
         app:pauseLineDistance="10dp"
-        app:pauseLineWidth="10dp"
 
+        app:pauseLineWidth="10dp"
         app:shadowRadius="8dp"
-        app:strokeWidth="1px"
+        app:solidColor="@color/colorAccent"
+
+        app:triangleColor="#fff"
         app:triangleHeight="45dp"
         app:triangleRadius="5dp" />
 

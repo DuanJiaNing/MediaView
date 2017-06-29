@@ -76,7 +76,7 @@ public class PlayView extends SkipView implements Checkable {
         pauseLineWidth = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineWidth, 0);
         pauseLineHeight = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineHeight, 951228);
         pauseLineRadius = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineRadius, triangleRadius);
-        pauseLineColor = array.getColor(R.styleable.PlayView_pauseLineColor, strokeColor);
+        pauseLineColor = array.getColor(R.styleable.PlayView_pauseLineColor, solidColor);
         pauseLineHollow = array.getBoolean(R.styleable.PlayView_pauseLineHollow, false);
         isPlaying = array.getBoolean(R.styleable.PlayView_checked, false);
         pauseLineStroke = array.getDimensionPixelSize(R.styleable.PlayView_pauseLineStroke, strokeWidth);

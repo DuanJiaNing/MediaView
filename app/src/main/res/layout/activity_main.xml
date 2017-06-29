@@ -88,7 +88,6 @@
 
             app:innerLineHeight="20dp"
 
-            app:strokeColor="@color/colorAccent"
             app:strokeWidth="3dp"
             app:triangleColor="@color/colorPrimary" />
 
@@ -190,7 +189,6 @@
             app:pauseLineWidth="10dp"
             app:shadowRadius="6dp"
 
-            app:strokeColor="#36bf5d"
             app:triangleColor="#36bf5d"
 
             app:strokeWidth="3dp"
@@ -215,7 +213,6 @@
 
             app:pauseLineRadius="0dp"
             app:pauseLineWidth="10dp"
-            app:strokeColor="#e4188f"
             app:triangleColor="#e4188f"
             app:strokeWidth="3dp"
             app:triangleHeight="35dp"
@@ -241,7 +238,6 @@
         <com.duan.mediaviewdemo.view.SkipView
             android:background="#1c211e"
 
-            app:strokeColor="#ffeeaa"
             app:triangleColor="#b9ffcd35"
             app:radius="30dp"
             app:strokeWidth="1dp"
@@ -264,7 +260,6 @@
 
             app:shadowRadius="15dp"
             app:radius="30dp"
-            app:strokeColor="@color/colorAccent"
             app:triangleColor="#b9ffffff"
             app:strokeWidth="3dp"
 
@@ -286,7 +281,6 @@
 
             app:pauseLineColor="@android:color/white"
             app:triangleColor="@android:color/white"
-            app:strokeColor="@android:color/white"
 
             app:pauseLineHeight="60dp"
 

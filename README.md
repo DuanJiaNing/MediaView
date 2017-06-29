@@ -184,7 +184,12 @@ xml 中提供的可定制属性如下：
 
 #### 六.版本变化
 - v 0.1 2017-06-16
-
+- v 0.2 2017-06-29
+修改圆环为可设置为空心的圆圈，可以通过`hollow`属性设置圆圈是否为空心<br>
+<img src="https://raw.githubusercontent.com/DuanJiaNing/MediaView/master/screenshort3.png" ><br>
+```java
+app:hollow="false"
+```
 #### 七.未来的开发计划
 - [ ] setter 和 getter 方法测试
 - [ ] 规范注释
