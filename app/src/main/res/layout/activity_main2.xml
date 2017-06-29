@@ -27,6 +27,8 @@
         android:layout_weight="0.4"
         android:rotation="180"
 
+        app:checked="true"
+
         app:hollow="false"
         app:pauseLineColor="#fff"
         app:pauseLineDistance="10dp"

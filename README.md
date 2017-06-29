@@ -185,10 +185,22 @@ xml 中提供的可定制属性如下：
 #### 六.版本变化
 - v 0.1 2017-06-16
 - v 0.2 2017-06-29
-修改圆环为可设置为空心的圆圈，可以通过`hollow`属性设置圆圈是否为空心<br>
+1 修正【播放/暂停】按钮在`pauseLineHeight`属性未赋值时绘制错误的情况。<br>
+2 修改圆环为可设置为空心的圆圈，可以通过`hollow`属性设置圆圈是否为空心，弃用`strokeColor`，使用`solidColor`属性为圆圈指定颜色。<br>
 <img src="https://raw.githubusercontent.com/DuanJiaNing/MediaView/master/screenshort3.png" ><br>
+`hollow`属性使用示例：<br>
 ```java
-app:hollow="false"
+  <com.duan.mediaviewdemo.view.PlayView
+        ...
+        
+        app:checked="true"
+        app:hollow="false"
+        app:pauseLineColor="#fff"
+        app:solidColor="@color/colorAccent"
+        app:triangleColor="#fff"
+        
+        ...
+        />
 ```
 #### 七.未来的开发计划
 - [ ] setter 和 getter 方法测试
