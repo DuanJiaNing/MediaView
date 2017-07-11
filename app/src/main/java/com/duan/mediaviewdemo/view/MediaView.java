@@ -159,6 +159,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
             return false;
         }
 
+        /*
         int x = (int) event.getX();
         int y = (int) event.getY();
         if (x < getLeft() || x > getRight() || y < getTop() || y > getBottom()) {
@@ -166,6 +167,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
             Log.i("main", "onTouchEvent: up again");
             return false;
         }
+        */
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
