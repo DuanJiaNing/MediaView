@@ -13,6 +13,7 @@ import android.os.Build;
 import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -26,26 +27,29 @@ import com.duan.mediaviewdemo.R;
 
 public abstract class MediaView extends View implements ValueAnimator.AnimatorUpdateListener {
 
-    //圆心坐标
-    protected float centerX;
-    protected float centerY;
+    //绘制部分中小坐标（圆心坐标）
+    protected float mCenterX;
+    protected float mCenterY;
+
+    //空心
+    private boolean mHollow;
+
+    //圆圈颜色
+    protected int solidColor;
+
+    private ValueAnimator pressAnim;
+    private ValueAnimator releaseAnim;
+
 
     //半径
     protected int radius;
 
     //阴影半径
     protected int shadowRadius;
-    protected int tempShadowRadius = 1;
-
-    private boolean hollow;
-    //圆圈颜色
-    protected int solidColor;
-
-    private ValueAnimator preAnim;
-    private ValueAnimator releaseAnim;
+    protected int shadowRadiusForAnim = 1;
 
     /**
-     * 圆圈宽度，赋值为 0 可取消圆圈的绘制
+     * 圆圈描边宽度（只在空心时有效），赋值为 0 可取消圆圈的绘制
      */
     protected int strokeWidth;
 
@@ -53,7 +57,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
 
     protected Context context;
 
-    //单击时开始 preAnim 动画结束后自动开始 releaseAnim 动画
+    //单击时:挤压动画（pressAnim）结束后是否自动开始释放动画（releaseAnim）
     private boolean autoRelease = false;
 
     protected final int defaultColor = Color.GRAY;
@@ -78,19 +82,21 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         radius = array.getDimensionPixelSize(R.styleable.MediaView_radius, radius);
         shadowRadius = array.getDimensionPixelSize(R.styleable.MediaView_shadowRadius, shadowRadius);
         strokeWidth = array.getDimensionPixelSize(R.styleable.MediaView_strokeWidth, strokeWidth);
-        hollow = array.getBoolean(R.styleable.MediaView_hollow, true);
+        mHollow = array.getBoolean(R.styleable.MediaView_hollow, true);
         solidColor = array.getColor(R.styleable.MediaView_solidColor, solidColor);
 
         array.recycle();
 
         //measure 会用到下面变量的值，应在这里确定值，而不应该是 onLayout 中
-        if (shadowRadius <= 0)
+        if (shadowRadius <= 0) {
             shadowRadius = 1;
+        }
 
-        if (strokeWidth <= 0)
+        if (strokeWidth <= 0) {
             strokeWidth = 0;
+        }
 
-        // shadowRadius 的值在这里才被正真确定，所有要在这里初始化动画
+        // shadowRadius 的值在这里才被正真确定，所以要在这里更新动画的属性值
         updateAnim();
 
     }
@@ -100,11 +106,8 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-//        centerX = getWidth() / 2;
-//        centerY = getHeight() / 2;
-
-        centerX = getPaddingLeft() + (getWidth() - getPaddingLeft() - getPaddingRight()) / 2;
-        centerY = getPaddingTop() + (getHeight() - getPaddingTop() - getPaddingBottom()) / 2;
+        mCenterX = getPaddingLeft() + (getWidth() - getPaddingLeft() - getPaddingRight()) / 2;
+        mCenterY = getPaddingTop() + (getHeight() - getPaddingTop() - getPaddingBottom()) / 2;
 
     }
 
@@ -117,21 +120,21 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         int width;
         int height;
 
-        int t = (shadowRadius + strokeWidth) * 2;
+        int t = (shadowRadius + (mHollow ? strokeWidth : 0)) * 2;
         int wp = getPaddingLeft() + getPaddingRight();
         int hp = getPaddingTop() + getPaddingBottom();
 
-        int te = -1;
+        boolean ignoreRadius = false;
         if (widthMode == MeasureSpec.EXACTLY) {
             width = widthSize;
-            te = 0;
+            ignoreRadius = true;
         } else {//xml中宽度设为warp_content
             width = radius * 2 + t + wp;
         }
 
         if (heightMode == MeasureSpec.EXACTLY) {
             height = heightSize;
-            te = 0;
+            ignoreRadius = true;
         } else {
             height = radius * 2 + t + hp;
         }
@@ -144,8 +147,9 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         setMeasuredDimension(width, height);
 
         //长宽任一者指定具体长度（EXACTLY）时，xml 中设置的 radius 失效
-        if (te != -1)
+        if (ignoreRadius) {
             radius = (Math.min(width - wp, height - hp) - t) / 2;
+        }
 
     }
 
@@ -154,14 +158,24 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         if (!isEnabled()) {
             return false;
         }
+
+        int x = (int) event.getX();
+        int y = (int) event.getY();
+        if (x < getLeft() || x > getRight() || y < getTop() || y > getBottom()) {
+            startReleaseAnim();
+            Log.i("main", "onTouchEvent: up again");
+            return false;
+        }
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startPreAnim();
+                startPressAnim();
                 //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
                 super.onTouchEvent(event);
                 return true;
             case MotionEvent.ACTION_UP:
                 startReleaseAnim();
+                Log.i("main", "onTouchEvent: up");
                 //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
                 super.onTouchEvent(event);
                 break;
@@ -185,13 +199,14 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         //Android4.0（API14）之后硬件加速功能就被默认开启了,setMaskFilter 在开启硬件加速的情况下无效，需要关闭硬件加速
         this.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
-        preAnim = ObjectAnimator.ofInt(1, 1);
+        //正真的初始化在 updateAnim 中完成
+        pressAnim = ObjectAnimator.ofInt(1, 1);
         releaseAnim = ObjectAnimator.ofInt(1, 1);
-        preAnim.addUpdateListener(this);
+        pressAnim.addUpdateListener(this);
         releaseAnim.addUpdateListener(this);
-        preAnim.setDuration(500);
+        pressAnim.setDuration(500);
         releaseAnim.setDuration(200);
-        preAnim.addListener(new Animator.AnimatorListener() {
+        pressAnim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -199,8 +214,9 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                if (autoRelease)
+                if (autoRelease) {
                     releaseAnim.start();
+                }
             }
 
             @Override
@@ -216,49 +232,52 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     }
 
     private void updateAnim() {
-        preAnim.setIntValues(1, shadowRadius + shadowRadius * 2 / 3, shadowRadius);
+        pressAnim.setIntValues(1, shadowRadius + shadowRadius * 2 / 3, shadowRadius);
         releaseAnim.setIntValues(shadowRadius, 1);
     }
 
     @Override
     public void onAnimationUpdate(ValueAnimator animation) {
         int value = (int) animation.getAnimatedValue();
-        tempShadowRadius = value;
+        shadowRadiusForAnim = value;
         invalidate();
     }
 
     protected void startReleaseAnim() {
-        if (preAnim.isRunning()) {
+        if (pressAnim.isRunning()) {
             //开始动画还没结束而想要停止动画（快速单击）
-            //此时需使 preAnim 在结束时自动开始 releaseAnim 动画
+            //此时需使 pressAnim 在结束时自动开始 releaseAnim 动画
             autoRelease = true;
+        } else {
+            releaseAnim.start();
+        }
+    }
+
+    protected void startPressAnim() {
+        autoRelease = false;
+        if (!pressAnim.isRunning()) {
+            pressAnim.start();
+        }
+    }
+
+    /**
+     * 绘制外面的圆圈
+     */
+    protected void drawBorder(Canvas canvas) {
+
+        if (mHollow && strokeWidth <= 0) {
             return;
         }
-        releaseAnim.start();
-    }
 
-    protected void startPreAnim() {
-        autoRelease = false;
-        if (preAnim.isRunning())
-            return;
-        preAnim.start();
-    }
-
-    //绘制外面的圆圈
-    protected void drawBackground(Canvas canvas) {
-
-        if (strokeWidth <= 0)
-            return;
-
-        if (hollow) {
+        if (mHollow) {
             paint.setStyle(Paint.Style.STROKE);
             paint.setStrokeWidth(strokeWidth);
         } else {
             paint.setStyle(Paint.Style.FILL);
         }
-        paint.setColor(solidColor);
 
-        canvas.drawCircle(centerX, centerY, radius, paint);
+        paint.setColor(solidColor);
+        canvas.drawCircle(mCenterX, mCenterY, radius, paint);
     }
 
     /**
@@ -272,9 +291,9 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         canvas.drawARGB(0, 0, 0, 0);
 
         //只绘制外阴影和图形内容本身，不绘制内阴影
-        paint.setMaskFilter(new BlurMaskFilter(tempShadowRadius, BlurMaskFilter.Blur.SOLID));
+        paint.setMaskFilter(new BlurMaskFilter(shadowRadiusForAnim, BlurMaskFilter.Blur.SOLID));
 
-        drawBackground(canvas);
+        drawBorder(canvas);
 
         drawInside(canvas);
 
@@ -286,11 +305,11 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     }
 
     public boolean isHollow() {
-        return hollow;
+        return mHollow;
     }
 
     public void setHollow(boolean hollow) {
-        this.hollow = hollow;
+        this.mHollow = hollow;
         invalidate();
     }
 

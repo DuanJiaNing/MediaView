@@ -18,6 +18,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
+        SkipView view = (SkipView) findViewById(R.id.play_pre_song);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "click", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 //        SkipView sv = (SkipView) findViewById(R.id.sv_01);
 //        PlayView pv = (PlayView) findViewById(R.id.pv_01);
 //
