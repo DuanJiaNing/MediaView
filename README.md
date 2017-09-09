@@ -205,7 +205,10 @@ xml 中提供的可定制属性如下：
         />
 ```
 
-- v 0.3 2017-06-29
+- v 0.3 2017-09-09
+1 修正手指移除控件范围时控件仍然响应触摸事件的错误<br>
+
+![](https://raw.githubusercontent.com/DuanJiaNing/Pictures/master/MediaView/pic.gif)
 
 在 view 的 enable 为 false 时，控件不可用（不响应触摸事件）。<br>
 

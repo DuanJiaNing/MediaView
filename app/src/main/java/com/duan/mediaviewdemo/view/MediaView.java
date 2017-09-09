@@ -37,10 +37,6 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
     //圆圈颜色
     protected int solidColor;
 
-    private ValueAnimator pressAnim;
-    private ValueAnimator releaseAnim;
-
-
     //半径
     protected int radius;
 
@@ -57,8 +53,13 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
 
     protected Context context;
 
+    private ValueAnimator pressAnim;
+    private ValueAnimator releaseAnim;
+
     //单击时:挤压动画（pressAnim）结束后是否自动开始释放动画（releaseAnim）
     private boolean autoRelease = false;
+    //当前是否处于可释放状态（pressAnim已经开始）
+    private boolean releasable = false;
 
     protected final int defaultColor = Color.GRAY;
 
@@ -159,29 +160,24 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
             return false;
         }
 
-        /*
-        int x = (int) event.getX();
-        int y = (int) event.getY();
-        if (x < getLeft() || x > getRight() || y < getTop() || y > getBottom()) {
-            startReleaseAnim();
-            Log.i("main", "onTouchEvent: up again");
-            return false;
+        int ac = event.getActionMasked();
+        int ex = (int) event.getX();
+        int ey = (int) event.getY();
+        if (ex < 0 || ey < 0 || ex > getWidth() || ey > getHeight()) {
+            release();
+            return true;
         }
-        */
 
-        switch (event.getAction()) {
+        switch (ac) {
             case MotionEvent.ACTION_DOWN:
-                startPressAnim();
+                press();
                 //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
                 super.onTouchEvent(event);
                 return true;
             case MotionEvent.ACTION_UP:
-                startReleaseAnim();
-                Log.i("main", "onTouchEvent: up");
+                release();
                 //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
                 super.onTouchEvent(event);
-                break;
-            default:
                 break;
         }
 
@@ -211,7 +207,7 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         pressAnim.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-
+                releasable = true;
             }
 
             @Override
@@ -219,6 +215,26 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
                 if (autoRelease) {
                     releaseAnim.start();
                 }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        releaseAnim.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                releasable = false;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
             }
 
             @Override
@@ -245,17 +261,19 @@ public abstract class MediaView extends View implements ValueAnimator.AnimatorUp
         invalidate();
     }
 
-    protected void startReleaseAnim() {
+    protected void release() {
         if (pressAnim.isRunning()) {
             //开始动画还没结束而想要停止动画（快速单击）
             //此时需使 pressAnim 在结束时自动开始 releaseAnim 动画
             autoRelease = true;
         } else {
-            releaseAnim.start();
+            if (!releaseAnim.isRunning() && releasable) {
+                releaseAnim.start();
+            }
         }
     }
 
-    protected void startPressAnim() {
+    protected void press() {
         autoRelease = false;
         if (!pressAnim.isRunning()) {
             pressAnim.start();

@@ -136,27 +136,15 @@ public class PlayView extends SkipView implements Checkable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        if (!isEnabled()) {
-            return false;
-        }
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                startPressAnim();
-                //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
-                super.onTouchEvent(event);
-                return true;
-            case MotionEvent.ACTION_UP:
-                startReleaseAnim();
-                //状态反转
+        if (event.getActionMasked() == MotionEvent.ACTION_UP) {
+            int ex = (int) event.getX();
+            int ey = (int) event.getY();
+            if (ex >= 0 && ey >= 0 && ex <= getWidth() && ey <= getHeight()) {
                 toggle();
-                //调用 View 的事件监听以使用 View 的 click 和 longClick 监听
-                super.onTouchEvent(event);
-                break;
-            default:
-                break;
+            }
         }
 
-        return false;
+        return super.onTouchEvent(event);
     }
 
     @Override
